@@ -13,15 +13,53 @@ class UserBaseSerializer(DynamicFieldsModelSerializer):
         fields = [
             "id",
             'username',
+            'about',
+            'avatar',
+            'banner',
+            'address',
+            'typ',
+        ]
+
+
+class EmployeeSerializer(UserBaseSerializer):
+    class Meta(UserBaseSerializer.Meta):
+        fields = UserBaseSerializer.Meta.fields + [
             'first_name',
             'last_name',
+            'old',
+            'education_degree',
             'national_code',
+            'mobile',
+            'skills',
+            'experiences',
+            'educations',
+            'languages',
             'birthday',
             'sex',
-            'input_amount',
-            'expenses_amount',
-            'inventory'
         ]
+        required_fields = (
+            'first_name',
+            'last_name',
+            'old',
+            'education_degree',
+            'national_code',
+        )
+
+
+class CompanySerializer(UserBaseSerializer):
+    class Meta(UserBaseSerializer.Meta):
+        fields = UserBaseSerializer.Meta.fields + [
+            'name_en',
+            'name_fa',
+            'website',
+            'establishment',
+            'count_type',
+        ]
+        required_fields = (
+            'name_fa',
+            'establishment',
+            'count_type',
+        )
 
 
 class UserRegisterSerializer(UserBaseSerializer):
