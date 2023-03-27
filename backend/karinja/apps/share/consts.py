@@ -1,24 +1,26 @@
-MALE = 'Male'
-FEMALE = 'Female'
-SEX_TYPE_CHOICES = (
-    (MALE, 'Male'),
-    (FEMALE, 'Female')
-)
+from django.db import models
 
 
-SATURDAY = 'SATURDAY'
-SUNDAY = 'SUNDAY'
-MONDAY = 'MONDAY'
-TUESDAY = 'TUESDAY'
-WEDNESDAY = 'WEDNESDAY'
-THURSDAY = 'THURSDAY'
-FRIDAY = 'FRIDAY'
-CLASS_DATE_CHOICES = (
-    (SATURDAY, 'SATURDAY'),
-    (SUNDAY, 'SUNDAY'),
-    (MONDAY, 'MONDAY'),
-    (TUESDAY, 'TUESDAY'),
-    (WEDNESDAY, 'WEDNESDAY'),
-    (THURSDAY, 'THURSDAY'),
-    (FRIDAY, 'FRIDAY'),
-)
+class SexTypeChoices(models.IntegerChoices):
+    MALE = 1, 'Male'
+    FEMALE = 2, 'Female'
+
+
+class UserTypeChoices(models.IntegerChoices):
+    EMPLOYEE = 1, 'Employee'
+    COMPANY = 2, 'Company'
+
+
+class EducationTypeChoices(models.IntegerChoices):
+    ASSOCIATE = 1, 'Associate'
+    BACHELOR = 2, 'Bachelor'
+    MASTER = 3, 'Master'
+    DOCTORAL = 4, 'Doctoral'
+
+
+class CompanyCountTypeChoices(models.IntegerChoices):
+    VERY_SMALL = 1, '1-10'
+    SMALL = 2, '10-50'
+    MEDIUM = 3, '50-200'
+    LARGE = 4, '200-1000'
+    VERY_LARGE = 5, '+1000'

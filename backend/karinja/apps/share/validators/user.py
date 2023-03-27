@@ -21,3 +21,9 @@ class NationalCodeValidator(validators.RegexValidator):
 class PhoneValidator(validators.RegexValidator):
     regex = r'^\d{3,12}$'
     message = 'تلفن معتبر نمی باشد.'
+
+
+@deconstructible
+class MobileValidator(validators.RegexValidator):
+    regex = r'^\d{11}$'
+    message = 'Invalid Mobile Number.'
