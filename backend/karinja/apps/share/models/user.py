@@ -35,7 +35,9 @@ class UserModel(AbstractBaseUser, BaseModel):
     national_code = models.CharField(
         verbose_name='National code', max_length=10, validators=[NationalCodeValidator()], null=True, blank=True
     )
-    mobile = models.CharField(verbose_name='Mobile', max_length=11, validators=MobileValidator())
+    mobile = models.CharField(
+        verbose_name='Mobile', max_length=11, validators=[MobileValidator()], null=True, blank=True
+    )
     skills = models.TextField(verbose_name='Skills', null=True, blank=True)
     experiences = models.TextField(verbose_name='Experiences', null=True, blank=True)
     educations = models.TextField(verbose_name='Educations', null=True, blank=True)
