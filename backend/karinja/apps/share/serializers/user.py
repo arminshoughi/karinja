@@ -13,12 +13,17 @@ class UserBaseSerializer(DynamicFieldsModelSerializer):
         fields = [
             "id",
             'username',
+            'password',
             'about',
             'avatar',
             'banner',
             'address',
             'typ',
         ]
+        extra_kwargs = {
+            'typ': {'read_only': True},
+            'password': {'write_only': True}
+        }
 
 
 class EmployeeSerializer(UserBaseSerializer):
