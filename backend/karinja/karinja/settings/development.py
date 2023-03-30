@@ -8,7 +8,7 @@ DATABASES = {
         "NAME": 'karinja_db',
         "USER": 'karinja_user',
         "PASSWORD": 'karinja_password@',
-        "HOST": 'localhost',
+        "HOST": 'db',
         "PORT": '5432',
     }
 }
