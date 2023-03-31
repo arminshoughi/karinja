@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 from utils.models import BaseModel
-from ..consts import SexTypeChoices, UserTypeChoices, EducationTypeChoices, CompanyCountTypeChoices
+from ..consts.users import EducationTypeChoices, SexTypeChoices, CompanyCountTypeChoices, UserTypeChoices
 from ..validators import UsernameValidator, NationalCodeValidator, MobileValidator
 
 

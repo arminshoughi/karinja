@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from apps.share.consts import UserTypeChoices
+from apps.share.consts.users import UserTypeChoices
 from utils.service import BaseService
 
 UserModel = get_user_model()

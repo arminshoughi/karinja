@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from apps.share.consts import UserTypeChoices
+from apps.share.consts.users import UserTypeChoices
 from apps.share.serializers import UserRegisterSerializer, EmployeeSerializer, CompanySerializer, UserBaseSerializer
 
 User = get_user_model()
