@@ -83,8 +83,8 @@ class UserModel(AbstractBaseUser, BaseModel):
     USERNAME_FIELD = 'username'
 
     class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
     def display_name(self):
         return f'{self.first_name} {self.last_name}'

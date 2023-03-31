@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Local app
     'apps.share',
+    'apps.job',
 ]
 
 MIDDLEWARE = [
