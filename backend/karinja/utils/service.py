@@ -13,8 +13,10 @@ class BaseService:
 
     @classmethod
     def truncate(cls):
-        with connection.cursor() as cursor:
-            cursor.execute(f'TRUNCATE TABLE {cls.model._meta.db_table} CASCADE')
+        # TODO: must be refactor with truncate command
+        # with connection.cursor() as cursor:
+        #     cursor.execute(f'TRUNCATE TABLE {cls.model._meta.db_table} CASCADE')
+        cls.all().delete()
 
     @classmethod
     def get(cls, **kwargs):
