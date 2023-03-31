@@ -46,6 +46,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/share/', include(('apps.share.urls', 'apps.share'), namespace='share', )),
+    path('api/jobs/', include(('apps.job.urls', 'apps.job'), namespace='job', )),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
