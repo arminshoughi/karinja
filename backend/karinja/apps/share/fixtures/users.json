@@ -1,0 +1,54 @@
+[
+    {
+        "model": "share.usermodel",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "password": "pbkdf2_sha256$260000$COjBO2fCMZ6WBQzMkwiydV$icqDcfuNTc1XikQnnM4y3u2x3MIc6+CCSj//SvGyGc4=",
+            "is_superuser": true,
+            "is_active": true,
+            "created_at": "2023-03-31 12:21:39.559044+00:00"
+        }
+    },
+    {
+        "model": "share.usermodel",
+        "pk": 2,
+        "fields": {
+            "username": "shakiba",
+            "password": "pbkdf2_sha256$260000$ayW0xswump9ewUPISJXO9Z$9hm9A/JNNrHPzNDwe4DdIrONGEgRpB51SatHVMjczC0=",
+            "first_name": "Shakiba",
+            "last_name": "Sarami",
+            "old": 24,
+            "education_degree": 2,
+            "national_code": "4610565544",
+            "mobile": "09130352070",
+            "skills": "Python, JavaScript, MSSQL Server",
+            "experiences": "Front-end developer in Electro Mizan Andishe for 2 years, 2020-2022",
+            "educations": "Bachelor of Engineering (BEng), Computer Software Engineering, Isfahan, Najaf Abad University",
+            "languages": "English (Elementary proficiency)",
+            "birthday": "1996-09-15",
+            "sex": 2,
+            "avatar": "static/shakiba.png",
+            "typ": 1,
+            "created_at": "2023-03-31 12:21:39.716046+00:00"
+        }
+    },
+    {
+        "model": "share.usermodel",
+        "pk": 3,
+        "fields": {
+            "username": "newsha",
+            "password": "pbkdf2_sha256$260000$dZZvhxLNHq8bb8VWOQJcsK$GB+doC4kFOPG9L/Uo3XTVYjYnbSVxStKscTq00aXwPo=",
+            "name_en": "Karinja",
+            "name_fa": "\u06a9\u0627\u0631\u06cc\u0646\u062c\u0627",
+            "website": "karinja.ir",
+            "establishment": 1393,
+            "count_type": 2,
+            "about": "\n                       \u06a9\u0627\u0631\u06cc\u0646\u062c\u0627 \u06cc\u06a9 \u0633\u0627\u0645\u0627\u0646\u0647 \u062c\u0633\u062a\u062c\u0648\u06cc \n                       \u0645\u0634\u0627\u063a\u0644 \u0628\u0631\u0627\u06cc \u067e\u06cc\u0634\u0631\u0641\u062a \u062f\u0631 \u0645\u0633\u06cc\u0631 \u0634\u063a\u0644\u06cc \u0627\u0633\u062a \u0627\u06cc\u062c\u0627\u062f \u0627\u0631\u062a\u0628\u0627\u0637 \u0622\u0633\u0627\u0646 \u0648 \u0633\u0631\u06cc\u0639 \u0628\u06cc\u0646 \u0645\u062a\u062e\u0635\u0635\u06cc\u0646 \u0648 \u0634\u0631\u06a9\u062a\u200c\u0647\u0627\u06cc \u0645\u0639\u062a\u0628\u0631 \u062f\u0631\n                        \u0627\u06cc\u0631\u0627\u0646\u060c \u0645\u0647\u0645\u200c\u062a\u0631\u06cc\u0646 \u0648\u0638\u06cc\u0641\u0647 \u0648 \u062e\u062f\u0645\u062a \u06a9\u0627\u0631\u06cc\u0646\u062c\u0627 \u0627\u0633\u062a \u06a9\u0647 \u0628\u0647 \u0635\u0648\u0631\u062a \u06a9\u0627\u0645\u0644\u0627 \u0631\u0627\u06cc\u06af\u0627\u0646 \u0628\u0647 \u06a9\u0627\u0631\u062c\u0648\u06cc\u0627\u0646 \u0627\u0631\u0627\u0626\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f.\n                        \u0628\u0627 \u062c\u0633\u062a\u062c\u0648 \u062f\u0631 \u0641\u0631\u0635\u062a\u200c\u0647\u0627\u06cc \u0634\u063a\u0644\u06cc \u0627\u0632 \u0637\u0631\u06cc\u0642 \u06a9\u0627\u0631\u06cc\u0646\u062c\u0627\u060c \u0628\u0647 \u0622\u0633\u0627\u0646\u06cc \u0634\u063a\u0644 \u0645\u0646\u0627\u0633\u0628 \u0648 \u0645\u0648\u0631\u062f \u0639\u0644\u0627\u0642\u0647\u200c\u062a\u0627\u0646 \u0631\u0627 \u067e\u06cc\u062f\u0627 \u06a9\u0646\u06cc\u062f\n                    ",
+            "avatar": "static/newsha.png",
+            "address": "\u0627\u0633\u062a\u0627\u0646 \u062a\u0647\u0631\u0627\u0646\u060c \u062a\u0647\u0631\u0627\u0646\u060c \u062e\u06cc\u0627\u0628\u0627\u0646 \u062d\u0633\u06cc\u0646 \u0645\u0631\u062f\u06cc\u060c \u0634\u0631\u06a9\u062a \u0627\u0644\u06a9\u062a\u0631\u0648 \u0645\u06cc\u0632\u0627\u0646 \u06a9\u0627\u0631\u06cc\u0646\u062c\u0627",
+            "typ": 2,
+            "created_at": "2023-03-31 12:21:39.878275+00:00"
+        }
+    }
+]
