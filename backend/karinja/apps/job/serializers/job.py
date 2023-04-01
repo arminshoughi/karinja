@@ -24,7 +24,6 @@ class JobCategoryBaseModelSerializer(DynamicFieldsModelSerializer):
 
 class JobModelBaseSerializer(DynamicFieldsModelSerializer):
     company = CompanySerializer(read_only=True)
-    company_id = serializers.IntegerField(write_only=True)
 
     city = CityBaseModelSerializer(read_only=True)
     city_id = serializers.IntegerField(write_only=True)
@@ -38,7 +37,6 @@ class JobModelBaseSerializer(DynamicFieldsModelSerializer):
         fields = [
             "id",
             'company',
-            'company_id',
             'category',
             'category_id',
             'title',
@@ -54,11 +52,6 @@ class JobModelBaseSerializer(DynamicFieldsModelSerializer):
             'sex',
             'military_status',
         ]
-
-    def validate_company_id(self, value):
-        if not User.objects.filter(id=value, typ=UserTypeChoices.COMPANY.value).exists():
-            raise serializers.ValidationError('invalid company id :(')
-        return value
 
 
 class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
