@@ -7,9 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from apps.job.services import JobService, JobApplicationService
+from apps.job.services import JobService, JobApplicationService, JobCategoryService
 from apps.job.permissions import IsCompany, IsEmployee
-from apps.job.serializers import JobModelBaseSerializer, JobApplyingBaseSerializer
+from apps.job.serializers import JobModelBaseSerializer, JobApplyingBaseSerializer, JobCategoryBaseModelSerializer
 
 
 class JobBaseModelMixin(object):
@@ -28,6 +28,13 @@ class JobListViewSet(JobBaseModelMixin, GenericViewSet, mixins.ListModelMixin, m
         application, _ = JobApplicationService.get_or_create(job=self.get_object(), user=self.request.user)
         serializer = JobApplyingBaseSerializer(application)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+
+class JobCategoryListViewSet(GenericViewSet, mixins.ListModelMixin):
+    serializer_class = JobCategoryBaseModelSerializer
+    queryset = JobCategoryService.all()
+    permission_classes = [IsAuthenticated]
+    pagination_class = None
 
 
 class CompanyJobModelViewSet(JobBaseModelMixin, ModelViewSet):
