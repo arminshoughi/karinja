@@ -30,11 +30,11 @@ services:
              python manage.py loaddata states &&
              python manage.py loaddata cities &&
              python manage.py loaddata job_categories &&
-             python manage.py runserver 0.0.0.0:8000"
+             python manage.py runserver 0.0.0.0:8001"
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "8001:8001"
     depends_on:
       - db
       - redis
