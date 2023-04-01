@@ -1,19 +1,19 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework import filters
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from apps.job.services import JobService
-from utils.viewsets import UserRelatedDataRestricted
+from apps.job.services import JobService, JobApplicationService
 from apps.job.permissions import IsCompany, IsEmployee
-from apps.job.serializers import JobModelBaseSerializer
+from apps.job.serializers import JobModelBaseSerializer, JobApplyingBaseSerializer
 
 
 class JobBaseModelMixin(object):
     queryset = JobService.all()
-    serializer_class = JobModelBaseSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = ['typ', 'sex', 'city', 'city__state', 'military_status']
@@ -21,11 +21,18 @@ class JobBaseModelMixin(object):
 
 
 class JobListViewSet(JobBaseModelMixin, GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
-    pass
+    serializer_class = JobModelBaseSerializer
+
+    @action(url_path='apply', methods=['GET'], detail=True, permission_classes=[IsEmployee])
+    def apply(self, request, pk):
+        application, _ = JobApplicationService.get_or_create(job=self.get_object(), user=self.request.user)
+        serializer = JobApplyingBaseSerializer(application)
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CompanyJobModelViewSet(JobBaseModelMixin, ModelViewSet):
     permission_classes = [IsCompany]
+    serializer_class = JobModelBaseSerializer
 
     def get_queryset(self):
         return self.queryset.filter(company=self.request.user)
@@ -40,8 +47,17 @@ class CompanyJobModelViewSet(JobBaseModelMixin, ModelViewSet):
 
 
 class EmployeeJobModelViewSet(
-    ModelViewSet,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
     JobBaseModelMixin,
-    UserRelatedDataRestricted,
+    GenericViewSet,
 ):
     permission_classes = [IsEmployee]
+    queryset = JobApplicationService.all()
+    serializer_class = JobApplyingBaseSerializer
+    filterset_fields = ['job__typ', 'job__sex', 'job__city', 'job__city__state', 'job__military_status']
+    search_fields = ['job__title', 'job__skills']
+
+    def get_queryset(self):
+        return JobApplicationService.filter(user=self.request.user)

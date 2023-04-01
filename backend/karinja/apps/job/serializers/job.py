@@ -2,9 +2,10 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from apps.job import services
-from apps.job.models import JobCategoryModel, JobModel
+from apps.job.models import JobCategoryModel, JobModel, JobApplicationModel
+from apps.job.services import JobApplicationService
 from apps.share.consts.users import UserTypeChoices
-from apps.share.serializers import CompanySerializer, CityBaseModelSerializer
+from apps.share.serializers import CompanySerializer, CityBaseModelSerializer, EmployeeSerializer
 
 from utils.serializers import DynamicFieldsModelSerializer
 
@@ -58,3 +59,18 @@ class JobModelBaseSerializer(DynamicFieldsModelSerializer):
         if not User.objects.filter(id=value, typ=UserTypeChoices.COMPANY.value).exists():
             raise serializers.ValidationError('invalid company id :(')
         return value
+
+
+class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
+    job = JobModelBaseSerializer(read_only=True)
+
+    class Meta:
+        model = JobApplicationModel
+        service = JobApplicationService
+        fields = [
+            'job',
+            'status',
+        ]
+        extra_kwargs = {
+            'status': {'read_only': True}
+        }
