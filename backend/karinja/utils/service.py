@@ -33,8 +33,12 @@ class BaseService:
             raise ObjectNotFound(cls.model)
 
     @classmethod
-    def filter(cls, **kwargs):
-        return cls.model.objects.filter(**kwargs)
+    def filter(cls, *args, **kwargs):
+        return cls.model.objects.filter(*args, **kwargs)
+
+    @classmethod
+    def exclude(cls, **kwargs):
+        return cls.model.objects.exclude(**kwargs)
 
     @classmethod
     def all(cls):
