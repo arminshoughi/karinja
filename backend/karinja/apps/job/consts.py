@@ -13,3 +13,10 @@ class MilitaryStatusTypeChoices(models.IntegerChoices):
     DONE = 1, _('Done')
     EXEMPT = 2, _('Exempt')
     NO_MATTER = 3, _('No Matter')
+
+
+class ApplicationStatusTypeChoices(models.IntegerChoices):
+    INITIAL = 0, _('Initial')
+    PENDING = 1, _('Pending')
+    ACCEPT = 2, _('Accept')
+    REJECT = 3, _('Reject')

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from apps.job.consts import CooperationTypeChoices, MilitaryStatusTypeChoices
+from apps.job.consts import CooperationTypeChoices, MilitaryStatusTypeChoices, ApplicationStatusTypeChoices
 from apps.share.consts.users import SexTypeChoices
 from apps.share.models import CityModel
 from utils.models import BaseModel
@@ -46,3 +46,23 @@ class JobModel(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+class JobApplicationModel(BaseModel):
+    user = models.ForeignKey(
+        verbose_name='User', to=User, on_delete=models.CASCADE, null=False, blank=False, related_name='application'
+    )
+    job = models.ForeignKey(
+        verbose_name='Job', to=JobModel, on_delete=models.CASCADE, null=False, blank=False, related_name='application'
+    )
+    status = models.IntegerField(
+        verbose_name='status', choices=ApplicationStatusTypeChoices.choices,
+        default=ApplicationStatusTypeChoices.INITIAL
+    )
+
+    class Meta:
+        verbose_name = 'Application'
+        verbose_name_plural = 'Applications'
+
+    def __str__(self):
+        return f'{self.user} - {self.job.title}'
