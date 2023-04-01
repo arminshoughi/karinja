@@ -47,6 +47,7 @@ urlpatterns = [
 
     path('api/share/', include(('apps.share.urls', 'apps.share'), namespace='share', )),
     path('api/jobs/', include(('apps.job.urls', 'apps.job'), namespace='job', )),
+    path('api/messenger/', include(('apps.messenger.urls', 'apps.messenger'), namespace='messenger', )),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
