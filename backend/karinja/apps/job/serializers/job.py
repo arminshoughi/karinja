@@ -68,6 +68,7 @@ class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
         model = JobApplicationModel
         service = JobApplicationService
         fields = [
+            'id',
             'job',
             'status',
         ]
