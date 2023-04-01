@@ -41,7 +41,7 @@ class CompanyJobModelViewSet(JobBaseModelMixin, ModelViewSet):
 
 class EmployeeJobModelViewSet(
     ModelViewSet,
+    JobBaseModelMixin,
     UserRelatedDataRestricted,
-    JobBaseModelMixin
 ):
     permission_classes = [IsEmployee]
