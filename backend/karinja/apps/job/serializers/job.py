@@ -4,8 +4,7 @@ from rest_framework import serializers
 from apps.job import services
 from apps.job.models import JobCategoryModel, JobModel, JobApplicationModel
 from apps.job.services import JobApplicationService
-from apps.share.consts.users import UserTypeChoices
-from apps.share.serializers import CompanySerializer, CityBaseModelSerializer, EmployeeSerializer
+from apps.share.serializers import CompanySerializer, CityBaseModelSerializer
 
 from utils.serializers import DynamicFieldsModelSerializer
 
