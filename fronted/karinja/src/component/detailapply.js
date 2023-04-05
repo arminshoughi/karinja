@@ -39,7 +39,14 @@ const {data : deleteApply} = useDeleteJob(change)
     <div class="space-y-4 mb-6">
       <h4 class="text-xl font-semibold">Required Skills</h4>
       <ul class="list-disc list-inside text-gray-600">
-        {data?.skills}
+        
+      {data?.skills
+            ?.replace("[", "")
+            ?.replace("]", " ")
+            ?.replace("[", " ")
+            ?.replaceAll("'", "")
+            ?.split(",")
+            .map((i) => i?.replaceAll(" ", ","))}
       </ul>
     </div>
     <div class="space-y-4 mb-6">
