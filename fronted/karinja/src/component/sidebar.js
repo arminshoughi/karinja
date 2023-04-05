@@ -18,12 +18,23 @@ console.log("narges",data.username)
     </div>
     
     <ul className="nav nav-pills flex-column mb-auto">
+      {data.typ === 1 ? <>
       <li className="nav-item">
         <NavLink to="/" className={({isActive}) => (isActive ? "active nav-link text-light" : 'nav-link text-light')}>list of job</NavLink>
       </li>
       <li className="nav-item">
         <NavLink to="/requests" className={({isActive}) => (isActive ? "active nav-link text-light" : 'nav-link text-light')}>requests</NavLink>
+      </li> 
+      </>
+      :<>
+      <li className="nav-item">
+        <NavLink to="/company" className={({isActive}) => (isActive ? "active nav-link text-light" : 'nav-link text-light')}>list of company job</NavLink>
       </li>
+      <li className="nav-item">
+        <NavLink to="/requests" className={({isActive}) => (isActive ? "active nav-link text-light" : 'nav-link text-light')}>requests</NavLink>
+      </li> 
+      </>}
+      
     </ul>
     <hr />
     <div className="text-light">
