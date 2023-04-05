@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export function useJob() {
+export function useJob(change) {
   const [collages, setData] = useState([]);
   console.log("npm i axios" , window.location.pathname)
   console.log("ssss" , window.location.pathname.split("/")[2])
@@ -34,9 +34,9 @@ export function useJob() {
       });
   };
 
-  useEffect(() => {
+  useEffect((change) => {
     getData();
-  }, []);
+  }, [change]);
 
   const data = React.useMemo(() => collages, [collages]);
   return {
