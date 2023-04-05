@@ -7,8 +7,8 @@ function PaginatedList() {
   const [results, setResults] = useState([]);
   const [count, setCount] = useState();
   const [search, setSearch] = useState(null);
-  const [state, setState] = useState(0);
-  const [cities, setCity] = useState(0);
+  const [state, setState] = useState("");
+  const [cities, setCity] = useState("");
   const [type, steType] = useState(0);
   const [military_status, steMilitary_status] = useState(0);
 
@@ -131,40 +131,47 @@ function PaginatedList() {
             <div class="mb-4">
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
-                for="state"
+                for="city"
               >
                 State
               </label>
-              <select
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="state"
-                value={cities}
-                onChange={(e) => setCity(e.target.value)}
-              >
-                {city?.results?.map((i) => (
-                  <option value={i.id}>{i.title}</option>
-                ))}
-              </select>
-            </div>
-
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="city"
-              >
-                City
-              </label>
+            
               <select
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="city"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
               >
+
                 {states?.results?.map((i) => (
                   <option value={i.id}>{i.title}</option>
-                ))}
+                  ))}
+                  <option value={""}>choose</option>ç
               </select>
             </div>
+            <div class="mb-4">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="state"
+              >
+                City
+              </label>
+              <select
+              disabled={state === ""}
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="state"
+                value={state === "" ? "":cities}
+                onChange={(e) => setCity(e.target.value)}
+              >
+                {city?.results?.map((i) => (
+                  <option value={i.id}>{i.title}</option>
+                ))}
+                  <option value={""}>choose</option>
+                
+              </select>
+            </div>
+
+            
             <div className="grid grid-cols-3">
               <div class="mb-4">
                 <label
