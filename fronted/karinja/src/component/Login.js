@@ -6,14 +6,10 @@ import { useCurrent } from "../hook/current";
 const Login = () => {
   const [status, setStatus] = useState();
   const [a, setA] = useState();
-  const [type, setType] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-  const { data } = useCurrent();
-  console.log(data, "asdasdasd");
-  localStorage.setItem("access", a);
- 
-
+console.log(a , "asdasdasd")
+localStorage.setItem('access', a)
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -41,7 +37,11 @@ const Login = () => {
     localStorage.setItem("flag", "true");
   };
   const location = useLocation();
-  useEffect(() => {}, [status]);
+    useEffect(() => {
+      
+    
+    
+    }, [status]);
   useEffect(() => {
     if (location.pathname === "/login") {
       localStorage.setItem("flag", "false");

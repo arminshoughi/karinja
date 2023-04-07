@@ -1,6 +1,7 @@
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Application from "./component/application";
 import DetailApplly from "./component/detailapply";
 import DetailJobCompany from "./component/detailJobCompany";
 
@@ -14,7 +15,6 @@ import Navbar from "./component/Navbar";
 
 import SideBar from "./component/sidebar";
 import Sighnin from "./component/sighnin";
-import { useCurrent } from "./hook/current";
 
 export const App = () => {
   const access = localStorage.getItem("access");
@@ -50,6 +50,8 @@ export const App = () => {
                   element={<DetailApplly />}
                 />
                 <Route path="/requests" element={<ListApply />} />
+                <Route path="/company/apply/:pageNumber" element={<Application />} />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/sighnin" element={<Sighnin />} />
               </Routes>
