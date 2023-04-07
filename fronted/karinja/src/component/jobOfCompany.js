@@ -1,35 +1,98 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useStates } from "../hook/state";
+import { useCategory } from "../hook/category";
 import { useCity } from "../hook/city";
+import { useCurrent } from '../hook/current'
+
+import { useStates } from "../hook/state";
+
 
 function JobOfCompany() {
-  const [results, setResults] = useState([]);
-  const [count, setCount] = useState();
-  const [search, setSearch] = useState(null);
-  const [state, setState] = useState(0);
-  const [cities, setCity] = useState(0);
-  const [type, steType] = useState(0);
+  const [title, setTitle] = useState(0);
+  const [description, setDescription] = useState(0);
+  const [salary, setsalary] = useState(0);
+  const [skils, setSkils] = useState(0);
+  const [educations, setEducations] = useState(0);
+  const [about, setAbout] = useState(0);
+  const [test, setTest] = useState(false);
+
+
+  const [cities, setCity] = useState("");
+  const { data } = useCategory();
+  const { data: states } = useStates();
   const [military_status, steMilitary_status] = useState(0);
 
   const [sex, setSex] = useState();
+  const [category, setCategory] = useState(0);
+  const [results, setResults] = useState([]);
+  const [search, setSearch] = useState(null);
+
+  const {data:current}=useCurrent()
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://127.0.0.1:8001/api/jobs/company/",
+        {
+          company_id: current?.id,
+          category_id: category,
+          title: title,
+          description: description,
+          city_id: cities,
+          typ: type,
+          salary: salary,
+          skills: skils,
+          educations: educations,
+          about: about,
+          sex: sex,
+          military_status: military_status,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer ${access}`,
+            "X-CSRFToken":
+              "gnu99yM7oNaRBL4Pjcs88CeWmxOWW55xf2lf1E7Hyzm4UlIZKCkYRI3RL9nTjwm5",
+          },
+        }
+      )
+      .then((result) => {
+        setTest(!test);
+      })
+      .catch((error) => {
+        alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
+      });
+    localStorage.setItem("flag", "true");
+  };
 
   const API_URL = `http://127.0.0.1:8001/api/jobs/company/?${
     !!search ? "search=" + search : ""
   }`;
-  const { data: states } = useStates();
-  const { data: city } = useCity(state);
   const [loading, setLoading] = useState(false);
   const [nextUrl, setNextUrl] = useState(null);
   const [prevUrl, setPrevUrl] = useState(null);
-  const [numbers, setNumbers] = useState([]);
+  const [state, setState] = useState("");
+  console.log(current , "asdasd")
+  const [type, steType] = useState(0);
+ 
 
+  const { data: city } = useCity(state);
 
-  const [generateNumber, setGenerateNumbers] = useState([]);
   const access = localStorage.getItem("access");
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  const onOptionChange = (e) => {
+    steType(e.target.value);
+  };
+  const onSexChange = (e) => {
+    setSex(e.target.value);
+  };
+  const onMilitaryStatusChange = (e) => {
+    steMilitary_status(e.target.value);
+  };
   useEffect(() => {
     setLoading(true);
     axios
@@ -46,32 +109,10 @@ function JobOfCompany() {
         setResults(response.data.results);
         setNextUrl(response.data.next);
         setPrevUrl(response.data.previous);
-        setCount(response.data.count);
 
         setLoading(false);
       });
-  }, [search]);
-
-  function generateNumbers() {
-    for (let i = 1; i <= count / 20; i++) {
-      setNumbers(numbers.push(i));
-    }
-
-    return numbers;
-  }
-
-  const onOptionChange = (e) => {
-    steType(e.target.value);
-  };
-  const onSexChange = (e) => {
-    setSex(e.target.value);
-  };
-  const onMilitaryStatusChange = (e) => {
-    steMilitary_status(e.target.value);
-  };
-  useEffect(() => {
-    setGenerateNumbers(generateNumbers());
-  }, []);
+  }, [search , test]);
 
   function handleNext() {
     setLoading(true);
@@ -119,13 +160,323 @@ function JobOfCompany() {
   return (
     <div className="p-4">
       <div className="bg-white shadow-lg rounded-lg px-4 py-6">
+        <h1>Incomes</h1>
+        <div className="col-12 my-4">
+          <div className="card">
+            <div className="card-header">New Income</div>
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <label htmlFor="amount">category</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="form-select form-select-lg"
+                  aria-label=".form-select-lg example"
+                >
+                  {data.map((i) => (
+                    <option className="h-10" value={i.id}>
+                      {i.title}
+                    </option>
+                  ))}
+                </select>
+
+                <div className="form-group">
+                  <label htmlFor="amount">title</label>
+                  <input
+                    onChange={(e) => setTitle(e.target.value)}
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                  <label htmlFor="amount">description</label>
+                  <input
+                    onChange={(e) => setDescription(e.target.value)}
+                    type="text"
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                  <label htmlFor="amount">salary</label>
+                  <input
+                    onChange={(e) => setsalary(e.target.value)}
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                  <label htmlFor="amount">skils</label>
+                  <input
+                    onChange={(e) => setSkils(e.target.value)}
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                  <label htmlFor="amount">educations</label>
+                  <input
+                    onChange={(e) => setDescription(e.target.value)}
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                  <label htmlFor="amount">about</label>
+                  <input
+                    onChange={(e) => setAbout(e.target.value)}
+                    name="amount"
+                    className="form-control"
+                    id="amount"
+                    placeholder="Enter amount"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="city"
+                  >
+                    State
+                  </label>
+
+                  <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="city"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                  >
+                    {states?.results?.map((i) => (
+                      <option value={i.id}>{i.title}</option>
+                    ))}
+                    <option value={""}>choose</option>ç
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="state"
+                  >
+                    City
+                  </label>
+                  <select
+                    disabled={state === ""}
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="state"
+                    value={state === "" ? "" : cities}
+                    onChange={(e) => setCity(e.target.value)}
+                  >
+                    {city?.results?.map((i) => (
+                      <option value={i.id}>{i.title}</option>
+                    ))}
+                    <option value={""}>choose</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-3">
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="accountType"
+                    >
+                      Type
+                    </label>
+                    <div class="ml-3 mt-1">
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="accountType"
+                          value="0"
+                          id="full-time"
+                          checked={type === "0"}
+                          onChange={onOptionChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="full-time"
+                        >
+                          Full time
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="accountType"
+                          value="1"
+                          id="part-time"
+                          checked={type === "1"}
+                          onChange={onOptionChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="part-time"
+                        >
+                          Part time
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="accountType"
+                          value="2"
+                          id="remote"
+                          checked={type === "2"}
+                          onChange={onOptionChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="remote"
+                        >
+                          Remote
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="sex"
+                    >
+                      Sex
+                    </label>
+                    <div class="ml-3 mt-1">
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="sex"
+                          value="1"
+                          id="male"
+                          checked={sex === "1"}
+                          onChange={onSexChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="male"
+                        >
+                          Male
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="sex"
+                          value="2"
+                          id="female"
+                          checked={sex === "2"}
+                          onChange={onSexChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="female"
+                        >
+                          Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="military_status"
+                    >
+                      Military Status
+                    </label>
+                    <div class="ml-3 mt-1">
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="military_status"
+                          value="0"
+                          id="included"
+                          checked={military_status === "0"}
+                          onChange={onMilitaryStatusChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="included"
+                        >
+                          Included
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="military_status"
+                          value="1"
+                          id="done"
+                          checked={military_status === "1"}
+                          onChange={onMilitaryStatusChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="done"
+                        >
+                          Done
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="military_status"
+                          value="2"
+                          id="exempt"
+                          checked={military_status === "2"}
+                          onChange={onMilitaryStatusChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="exempt"
+                        >
+                          Exempt
+                        </label>
+                      </div>
+
+                      <div class="flex items-center mb-2">
+                        <input
+                          class="form-radio h-4 w-4 text-indigo-600"
+                          type="radio"
+                          name="military_status"
+                          id="no-matter"
+                          value="3"
+                          checked={military_status === "3"}
+                          onChange={onMilitaryStatusChange}
+                        />
+                        <label
+                          class="ml-2 block text-gray-900 font-medium"
+                          for="no-matter"
+                        >
+                          No Matter
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" className="m-2 btn btn-outline-primary">
+                  submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <div>
-           
-
-
             <div class="p-4">
               <h1 class="font-bold text-lg mb-4">Jobs</h1>
               <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -159,7 +510,7 @@ function JobOfCompany() {
                               {item.title}
                             </div>
                           </td>
-                         
+
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                               {item.city?.state?.title}
@@ -179,9 +530,25 @@ function JobOfCompany() {
                               ? "Exempt"
                               : "No Matter"}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <button onClick={() =>window.location.href = "company/" +item.id} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4">
+                          <td class="px-6  whitespace-nowrap text-sm text-gray-500">
+                            <button
+                              onClick={() =>
+                                (window.location.href = "company/" + item.id)
+                              }
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4"
+                            >
                               Further Information
+                            </button>
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button
+                              onClick={() =>
+                                (window.location.href =
+                                  "/company/apply/" + item.id)
+                              }
+                              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded me-4"
+                            >
+                              application
                             </button>
                           </td>
                         </tr>
