@@ -28,3 +28,6 @@ class Command(BaseCommand):
                     MessageService.create(**{
                         "sender_id": sender.id, "receiver_id": receiver.id, "body": self.faker_fa.text()
                     })
+                    MessageService.create(**{
+                        "sender_id": receiver.id, "receiver_id": sender.id, "body": self.faker_fa.text()
+                    })
