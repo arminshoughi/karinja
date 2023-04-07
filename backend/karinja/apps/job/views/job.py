@@ -9,7 +9,8 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from apps.job.services import JobService, JobApplicationService, JobCategoryService
 from apps.job.permissions import IsCompany, IsEmployee
-from apps.job.serializers import JobModelBaseSerializer, JobApplyingBaseSerializer, JobCategoryBaseModelSerializer
+from apps.job.serializers import JobModelBaseSerializer, JobApplyingBaseSerializer, JobCategoryBaseModelSerializer, \
+    JobApplyingChangeStatusSerializer
 
 
 class JobBaseModelMixin(object):
@@ -51,6 +52,24 @@ class CompanyJobModelViewSet(JobBaseModelMixin, ModelViewSet):
     def perform_update(self, serializer):
         serializer.validated_data['company_id'] = self.request.user.id
         serializer.save()
+
+    @action(url_path='applications', methods=['GET'], detail=True, permission_classes=[IsCompany])
+    def applications(self, request, pk):
+        application = JobApplicationService.filter(job=self.get_object())
+        serializer = JobApplyingBaseSerializer(application, many=True)
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        url_path='change_status/(?P<application_id>[0-9]+)', methods=['PUT'], detail=True, permission_classes=[IsCompany],
+        serializer_class=JobApplyingChangeStatusSerializer
+    )
+    def change_status(self, request, pk, application_id):
+        application = JobApplicationService.filter(job=self.get_object(), id=application_id).first()
+        serializer = JobApplyingChangeStatusSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        application.status = serializer.validated_data.get('status', False)
+        application.save()
+        return Response(JobApplyingBaseSerializer(application).data, status=status.HTTP_201_CREATED)
 
 
 class EmployeeJobModelViewSet(

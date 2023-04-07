@@ -67,3 +67,16 @@ class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
         extra_kwargs = {
             'status': {'read_only': True}
         }
+
+
+class JobApplyingChangeStatusSerializer(DynamicFieldsModelSerializer):
+    job = JobModelBaseSerializer(read_only=True)
+
+    class Meta:
+        model = JobApplicationModel
+        service = JobApplicationService
+        fields = [
+            'id',
+            'job',
+            'status',
+        ]
