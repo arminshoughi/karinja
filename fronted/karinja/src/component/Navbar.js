@@ -50,7 +50,6 @@ const Navbar = () => {
         "http://127.0.0.1:8001/api/messenger/",
         {
           
-            sender_1d:data.id,
             receiver_id: results.data.results?.map((i) => i.sender)[0].id,
             body: send,
           
@@ -112,18 +111,7 @@ const Navbar = () => {
                 list of company job
               </NavLink>
             </div>
-            <div className="nav-item">
-              <NavLink
-                to="/requests"
-                className={({ isActive }) =>
-                  isActive
-                    ? "active nav-link  text-red-500"
-                    : "nav-link  text-red-500"
-                }
-              >
-                requests
-              </NavLink>
-            </div>
+          
           </button>
         ) : (
           <button className="nav nav-pills flex mb-auto mt-3 ml-20">
@@ -180,14 +168,13 @@ const Navbar = () => {
       </div>
       <Modal show={show}>
         <Modal.Header closeButton onClick={() => setShow(!show)}>
-          <Modal.Title> profile</Modal.Title>
+          <Modal.Title> 
+            Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {data.typ === 1 ? (
             <div class="bg-white rounded-lg shadow-md p-8">
-              <div class="flex justify-between items-start border-b-2 pb-4 mb-4">
-                <h2 class="text-xl font-bold">{data?.username}</h2>
-              </div>
+              
               <div class="flex items-center space-x-4 mb-6">
                 {data.company?.avatar ? (
                   <img
@@ -199,7 +186,7 @@ const Navbar = () => {
                   <div class="w-12 h-12 rounded-full bg-gray-200"></div>
                 )}
                 <div>
-                  <h4 class="text-xl font-semibold">{data?.last_name}</h4>
+                  <h4 class="text-xl font-semibold">{data?.username + " " +data?.last_name}</h4>
                   <p class="text-gray-600">{data?.address}</p>
                 </div>
               </div>
@@ -218,24 +205,24 @@ const Navbar = () => {
               </div>
               <div class="space-y-4 mb-6">
                 <h4 class="text-xl font-semibold">Documents</h4>
-                <p class="text-gray-600">{data?.educations}</p>
-                <p class="text-gray-600">{data?.experiences}</p>
+                <p class="text-gray-600 ml-3">{data?.educations}</p>
+                <p class="text-gray-600 ml-3" >{data?.experiences}</p>
               </div>
               <div class="space-y-4 mb-6">
                 <h4 class="text-xl font-semibold">About the {data.username}</h4>
-                <p class="text-gray-600">{data?.about}</p>
+                <p class="text-gray-600 ml-3">{data?.about}</p>
               </div>
-              <p class="text-gray-600">
+              <p class="text-gray-600 ml-3">
                 Sex: {data?.sex === 1 ? "Male" : "Female"}
               </p>
 
-              <p class="text-gray-600">Old: {data?.old}</p>
-              <p class="text-gray-600">national_code: {data?.national_code}</p>
-              <p class="text-gray-600">mobile: {data?.mobile}</p>
-              <p class="text-gray-600">languages: {data?.languages}</p>
-              <div class="space-y-4 mb-6">
+              <p class="text-gray-600 ml-3">Old: {data?.old}</p>
+              <p class="text-gray-600 ml-3">national_code: {data?.national_code}</p>
+              <p class="text-gray-600 ml-3">mobile: {data?.mobile}</p>
+              <p class="text-gray-600 ml-3">languages: {data?.languages}</p>
+              <div class="space-y-4 mb-6 ">
                 <h4 class="text-xl font-semibold">about {data.username}</h4>
-                <p class="text-gray-600">{data?.about}</p>
+                <p class="text-gray-600 ">{data?.about}</p>
               </div>
             </div>
           ) : (
@@ -269,9 +256,7 @@ const Navbar = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setShow(!show)} className="btn btn-danger">
-            Close Modal
-          </Button>
+         
         </Modal.Footer>
       </Modal>
 
@@ -307,7 +292,7 @@ const Navbar = () => {
                         <img
                           src={data?.avatar}
                           alt={data?.name_en}
-                          class="w-12 h-12 rounded-full object-cover"
+                          class="w-12 h-06 rounded-full object-cover"
                         />
 
                         <div>
@@ -325,9 +310,7 @@ const Navbar = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setChat(!chat)} className="btn btn-danger">
-            Close Modal
-          </Button>
+         
         </Modal.Footer>
       </Modal>
 
@@ -371,12 +354,7 @@ const Navbar = () => {
           <Button onClick={handleSubmit} className="btn btn-success w-28">
             send
           </Button>
-          <Button
-            onClick={() => setSelectedMessage(!selectedMessage)}
-            className="btn btn-danger"
-          >
-            Close Modal
-          </Button>
+          
         </Modal.Footer>
       </Modal>
     </>
