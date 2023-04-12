@@ -13,7 +13,6 @@ import ListApply from "./component/listAplly";
 import Login from "./component/Login";
 import Navbar from "./component/Navbar";
 
-import SideBar from "./component/sidebar";
 import Sighnin from "./component/sighnin";
 
 export const App = () => {
@@ -27,9 +26,9 @@ export const App = () => {
             window.location.pathname.includes("sighnin") ? (
               ""
             ) : (
-              <SideBar />
+          ""
             )}
-            <div className="w-75 ms-auto">
+            <div className="w-[2000rem] ms-auto">
               {window.location.pathname.includes("login") ||
               window.location.pathname.includes("sighnin") ? (
                 ""
@@ -65,8 +64,7 @@ export const App = () => {
             window.location.pathname.includes("sighnin") ? (
               ""
             ) : (
-              <SideBar />
-            )}
+""            )}
             <div className="w-75 ms-auto">
               {window.location.pathname.includes("login") ||
               window.location.pathname.includes("sighnin") ? (

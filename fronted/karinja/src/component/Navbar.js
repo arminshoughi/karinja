@@ -7,6 +7,7 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { Modal, Button } from "react-bootstrap";
 import { useMassage } from "../hook/message";
 import { useSenter } from "../hook/sender";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const Navbar = () => {
   const [sender, setSender] = useState();
 
   const { data: message } = useMassage();
-  const results  = useSenter(sender);
+  const results = useSenter(sender);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const { data } = useCurrent();
   const handleShow = () => setShow(true);
@@ -33,15 +34,9 @@ const Navbar = () => {
     setSelectedMessage(true);
   }
 
-  const messages = [
-    { usernane: "John Doe" },
-    { usernane: "Jane Smith" },
-    { usernane: "Bob Johnson" },
-  ];
-  console.log(results.data.results  , "asds");
   return (
     <>
-      <div className="container-fluid px-md-5">
+      <div className="container-fluid flex px-md-5">
         <button
           className="btn  position-relative"
           type="button"
@@ -62,15 +57,91 @@ const Navbar = () => {
             <span className="ml-3 mt-3">chats</span>
           </div>
         </button>
-
-        <div
-          className="offcanvas offcanvas-start"
-          tabIndex="-1"
-          id="offcanvasExample"
-          aria-labelledby="offcanvasExampleLabel"
-        >
-          <ul className="list-group"></ul>
+        {data.typ === 2 ? <button className="nav nav-pills flex mb-auto mt-3 ml-20">
+          <div className="nav-item">
+            <NavLink
+              to="/company"
+              className={({ isActive }) =>
+                isActive
+                  ? "active nav-link text-red-500"
+                  : "nav-link  text-red-500"
+              }
+            >
+              list of company job
+            </NavLink>
+          </div>
+          <div className="nav-item">
+            <NavLink
+              to="/requests"
+              className={({ isActive }) =>
+                isActive
+                  ? "active nav-link  text-red-500"
+                  : "nav-link  text-red-500"
+              }
+            >
+              requests
+            </NavLink>
+          </div>
+        </button>:
+        <button className="nav nav-pills flex mb-auto mt-3 ml-20">
+        <div className="nav-item">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "active nav-link text-red-500"
+                : "nav-link  text-red-500"
+            }
+          >
+            list of job
+          </NavLink>
         </div>
+        <div className="nav-item">
+          <NavLink
+            to="/requests"
+            className={({ isActive }) =>
+              isActive
+                ? "active nav-link  text-red-500"
+                : "nav-link  text-red-500"
+            }
+          >
+            requests
+          </NavLink>
+        </div>
+      </button>
+        }
+        
+        <div className="text-light">
+         
+        </div>
+        <div className="w-[70%]  grid justify-items-end">
+        <div className="flex mt-3">
+
+        <div className="mt-1">
+
+          Logged in as:
+        </div>
+          <div className="text-center ml-5">
+            <div className="btn-group btn-group-sm" role="group">
+              <button type="button" className="btn btn-secondary" disabled>
+                {data.username}
+              </button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("access");
+                  window.location.href = "/login";
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                log out
+              </button>
+            </div>
+          </div>
+          </div>
+   
+        </div>
+        
       </div>
       <Modal show={show}>
         <Modal.Header closeButton onClick={() => setShow(!show)}>
@@ -233,11 +304,24 @@ const Navbar = () => {
           closeButton
           onClick={() => setSelectedMessage(!selectedMessage)}
         >
-          <Modal.Title> chats with {results.data.results?.map(i =>i.sender)[0].username}</Modal.Title>
+          <Modal.Title>
+            {" "}
+            chats with {results.data.results?.map((i) => i.sender)[0].username}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="">{results.data.results?.map(i =>
-          <div className={`${i.sender.id === 3 ? "bg-green-500 mt-2 rounded-lg  w-96":"bg-red-500 w-96  mt-2 ml-20 rounded-lg"}`}>{i.body}</div>
-          )}</Modal.Body>
+        <Modal.Body className="">
+          {results.data.results?.map((i) => (
+            <div
+              className={`${
+                i.sender.id === 3
+                  ? "bg-green-500 mt-2 rounded-lg  w-96"
+                  : "bg-red-500 w-96  mt-2 ml-20 rounded-lg"
+              }`}
+            >
+              {i.body}
+            </div>
+          ))}
+        </Modal.Body>
         <Modal.Footer>
           <Button
             onClick={() => setSelectedMessage(!selectedMessage)}
