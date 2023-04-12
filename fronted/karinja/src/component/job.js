@@ -84,11 +84,13 @@ function Job() {
           <button
             class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg"
           >
-           sent a Resume 
+           sent 
           </button>
         ) : (
           <button
-            onClick={() => setChange(true)}
+            onClick={() => {setChange(true) 
+            window.location.href = "/"
+            } }
             class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg"
           >
             Apply Now

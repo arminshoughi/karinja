@@ -202,7 +202,7 @@ function ListApply() {
                           
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <button onClick={() =>window.location.href = "requests/" +item.id} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4">
-                              Further Information
+                          more
                             </button>
                           </td>
                         </tr>

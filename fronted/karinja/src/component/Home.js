@@ -128,50 +128,49 @@ function PaginatedList() {
           <p>Loading...</p>
         ) : (
           <div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="city"
-              >
-                State
-              </label>
-            
-              <select
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="city"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              >
+            <div className="flex">
+              <div class="mb-4 w-[49%]">
+                <label
+                  class="block text-gray-700 text-sm font-bold mb-2"
+                  for="city"
+                >
+                  State
+                </label>
 
-                {states?.results?.map((i) => (
-                  <option value={i.id}>{i.title}</option>
+                <select
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="city"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                >
+                  {states?.results?.map((i) => (
+                    <option value={i.id}>{i.title}</option>
                   ))}
                   <option value={""}>choose</option>ç
-              </select>
-            </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="state"
-              >
-                City
-              </label>
-              <select
-              disabled={state === ""}
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="state"
-                value={state === "" ? "":cities}
-                onChange={(e) => setCity(e.target.value)}
-              >
-                {city?.results?.map((i) => (
-                  <option value={i.id}>{i.title}</option>
-                ))}
+                </select>
+              </div>
+              <div class="mb-4 w-[49%] ml-5">
+                <label
+                  class="block text-gray-700 text-sm font-bold mb-2"
+                  for="state"
+                >
+                  City
+                </label>
+                <select
+                  disabled={state === ""}
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="state"
+                  value={state === "" ? "" : cities}
+                  onChange={(e) => setCity(e.target.value)}
+                >
+                  {city?.results?.map((i) => (
+                    <option value={i.id}>{i.title}</option>
+                  ))}
                   <option value={""}>choose</option>
-                
-              </select>
+                </select>
+              </div>
             </div>
 
-            
             <div className="grid grid-cols-3">
               <div class="mb-4">
                 <label
@@ -369,7 +368,7 @@ function PaginatedList() {
             <div class="p-4">
               <h1 class="font-bold text-lg mb-4">Jobs</h1>
               <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 border-b border-gray-200">
+                <div class="p-4 border-b  border-gray-200">
                   <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -383,6 +382,7 @@ function PaginatedList() {
                   <table class="w-full table-auto">
                     <thead class="bg-gray-50">
                       <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left">#</th>
                         <th class="px-6 py-3 text-left">Title</th>
                         <th class="px-6 py-3 text-left">Company</th>
                         <th class="px-6 py-3 text-left">State</th>
@@ -392,8 +392,13 @@ function PaginatedList() {
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      {results.map((item) => (
+                      {results.map((item, index) => (
                         <tr key={item.id} class="hover:bg-gray-100">
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">
+                              {(currentPage - 1) * 20 + index + 1}
+                            </div>
+                          </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
                               {item.title}
@@ -404,6 +409,7 @@ function PaginatedList() {
                               {item.company.username}
                             </div>
                           </td>
+
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                               {item.city.state.title}
@@ -414,8 +420,9 @@ function PaginatedList() {
                               {item.city.title}
                             </span>
                           </td>
+
                           <td class="px-6 inline-flex text-xs leading-5 font-semibold rounded-full mt-8 bg-blue-100 text-teal-800">
-                          {item.military_status === 0
+                            {item.military_status === 0
                               ? "Concluded"
                               : item.military_status === 1
                               ? "Done"
@@ -424,8 +431,11 @@ function PaginatedList() {
                               : "No Matter"}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <button onClick={() =>window.location.href = item.id} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4">
-                              Further Information
+                            <button
+                              onClick={() => (window.location.href = item.id)}
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4"
+                            >
+                              more
                             </button>
                           </td>
                         </tr>

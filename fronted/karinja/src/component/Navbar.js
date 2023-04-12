@@ -83,7 +83,7 @@ const Navbar = () => {
           onClick={handleShow}
         >
           <div className="flex ">
-            <HiUser className="!w-10 text-red-600 !h-10" />
+            <HiUser className="!w-10 text-blue-600 !h-10" />
             <span className="ml-3 mt-3">{data?.username}</span>
           </div>
         </button>
@@ -93,7 +93,7 @@ const Navbar = () => {
           onClick={handleChat}
         >
           <div className="flex ">
-            <AiOutlineMessage className="!w-10 mt-1 text-red-600 !h-10" />
+            <AiOutlineMessage className="!w-10 mt-1 text-blue-600 !h-10" />
             <span className="ml-3 mt-3">chats</span>
           </div>
         </button>
@@ -168,26 +168,25 @@ const Navbar = () => {
       </div>
       <Modal show={show}>
         <Modal.Header closeButton onClick={() => setShow(!show)}>
-          <Modal.Title> 
-            Profile</Modal.Title>
+   
         </Modal.Header>
         <Modal.Body>
           {data.typ === 1 ? (
-            <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="bg-white rounded-lg px-8">
               
               <div class="flex items-center space-x-4 mb-6">
                 {data.company?.avatar ? (
                   <img
                     src={data?.avatar}
                     alt={data?.last_name}
-                    class="w-12 h-12 rounded-full object-cover"
+                    class="w-16 h-16 rounded-full object-cover"
                   />
                 ) : (
-                  <div class="w-12 h-12 rounded-full bg-gray-200"></div>
+                  <div class="w-16 h-16 rounded-full bg-gray-200"></div>
                 )}
                 <div>
-                  <h4 class="text-xl font-semibold">{data?.username + " " +data?.last_name}</h4>
-                  <p class="text-gray-600">{data?.address}</p>
+                  <h4 class="text-xl font-semibold mt-4">{data?.username + " " +data?.last_name}</h4>
+                  <p class="text-gray-600">{!!data?.address ? data?.address : "---" } </p>
                 </div>
               </div>
 
@@ -220,13 +219,13 @@ const Navbar = () => {
               <p class="text-gray-600 ml-3">national_code: {data?.national_code}</p>
               <p class="text-gray-600 ml-3">mobile: {data?.mobile}</p>
               <p class="text-gray-600 ml-3">languages: {data?.languages}</p>
-              <div class="space-y-4 mb-6 ">
+              <div class="space-y-4 mb-20">
                 <h4 class="text-xl font-semibold">about {data.username}</h4>
-                <p class="text-gray-600 ">{data?.about}</p>
+                <p class="text-gray-600  ">{data?.about}</p>
               </div>
             </div>
           ) : (
-            <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="bg-white rounded-lg  p-8">
               <div class="flex justify-between items-start border-b-2 pb-4 mb-4">
                 <h2 class="text-xl font-bold">{data?.username}</h2>
               </div>
@@ -249,15 +248,13 @@ const Navbar = () => {
 
               <div class="space-y-4 mb-6 mt-10">
                 <h4 class="text-xl font-semibold">About the Company</h4>
-                <p class="text-gray-600">{data?.about}</p>
+                <p class="text-gray-600 ">{data?.about}</p>
               </div>
               <div class="flex justify-between mb-4"></div>
             </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-         
-        </Modal.Footer>
+                  
       </Modal>
 
       <Modal class="!h-[50rem] !w-[90rem] ml-[40rem] mt-40" show={chat}>
@@ -309,9 +306,7 @@ const Navbar = () => {
             </table>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-         
-        </Modal.Footer>
+     
       </Modal>
 
       <Modal
@@ -326,13 +321,13 @@ const Navbar = () => {
             chats with {results.data.results?.map((i) => i.sender)[0]?.username}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="max-h-[30rem] overflow-y-scroll">
+        <Modal.Body className="max-h-[30rem]  overflow-y-scroll">
           {results.data.results?.map((i) => (
             <div
               className={`${
                 i.sender.id === data?.id
-                  ? "bg-green-500 mt-2 rounded-lg  w-96" 
-                  :  "bg-red-500 w-96  mt-2 ml-20 rounded-lg"
+                  ? "bg-green-600 mt-2  text-white p-3 rounded-lg  w-96" 
+                  :  "bg-blue-300 w-96 text-white  p-3 mt-2 ml-20 rounded-lg"
               }`}
             >
               {i.body}
@@ -340,18 +335,14 @@ const Navbar = () => {
           ))}
         </Modal.Body>
         <Modal.Footer>
-          <div className="flex">
-            <span className=" ">
-              <AiFillWechat className="h-10 w-10" />
-            </span>
+            
             <input
               onChange={(e) => setSend(e.target.value)}
               type="text"
-              className=" py-2 ml-5 w-[25rem] px-4 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className=" py-2 ml-5 w-full px-4 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Type your message here"
             ></input>
-          </div>
-          <Button onClick={handleSubmit} className="btn btn-success w-28">
+          <Button onClick={handleSubmit} className="btn btn-success w-full">
             send
           </Button>
           
