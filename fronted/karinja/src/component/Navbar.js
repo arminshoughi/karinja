@@ -8,6 +8,8 @@ import { Modal, Button } from "react-bootstrap";
 import { useMassage } from "../hook/message";
 import { useSenter } from "../hook/sender";
 import { Link, NavLink } from "react-router-dom";
+import { AiFillWechat } from "react-icons/ai";
+import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation();
@@ -15,10 +17,14 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [chat, setChat] = useState(false);
   const [sender, setSender] = useState();
+  const [change, setChange] = useState(false);
+
+  const access = localStorage.getItem("access");
 
   const { data: message } = useMassage();
-  const results = useSenter(sender);
+  const results = useSenter(sender , change);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [send, setSend] = useState();
   const { data } = useCurrent();
   const handleShow = () => setShow(true);
   const handleChat = () => setChat(true);
@@ -33,6 +39,41 @@ const Navbar = () => {
     setSender(message.id);
     setSelectedMessage(true);
   }
+
+
+  const handleSubmit = (e) => {
+    setChange(!change)
+
+    e.preventDefault();
+    axios
+      .post(
+        "http://127.0.0.1:8001/api/messenger/",
+        {
+          
+            sender_1d:data.id,
+            receiver_id: results.data.results?.map((i) => i.sender)[0].id,
+            body: send,
+          
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer ${access}`,
+            "X-CSRFToken":
+              "gnu99yM7oNaRBL4Pjcs88CeWmxOWW55xf2lf1E7Hyzm4UlIZKCkYRI3RL9nTjwm5",
+          },
+        }
+      )
+      .then((result) => {
+        setChange(!change)
+      })
+      .catch((error) => {
+        alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
+      });
+    localStorage.setItem("flag", "true");
+  };
+
 
   return (
     <>
@@ -57,91 +98,85 @@ const Navbar = () => {
             <span className="ml-3 mt-3">chats</span>
           </div>
         </button>
-        {data.typ === 2 ? <button className="nav nav-pills flex mb-auto mt-3 ml-20">
-          <div className="nav-item">
-            <NavLink
-              to="/company"
-              className={({ isActive }) =>
-                isActive
-                  ? "active nav-link text-red-500"
-                  : "nav-link  text-red-500"
-              }
-            >
-              list of company job
-            </NavLink>
-          </div>
-          <div className="nav-item">
-            <NavLink
-              to="/requests"
-              className={({ isActive }) =>
-                isActive
-                  ? "active nav-link  text-red-500"
-                  : "nav-link  text-red-500"
-              }
-            >
-              requests
-            </NavLink>
-          </div>
-        </button>:
-        <button className="nav nav-pills flex mb-auto mt-3 ml-20">
-        <div className="nav-item">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "active nav-link text-red-500"
-                : "nav-link  text-red-500"
-            }
-          >
-            list of job
-          </NavLink>
-        </div>
-        <div className="nav-item">
-          <NavLink
-            to="/requests"
-            className={({ isActive }) =>
-              isActive
-                ? "active nav-link  text-red-500"
-                : "nav-link  text-red-500"
-            }
-          >
-            requests
-          </NavLink>
-        </div>
-      </button>
-        }
-        
-        <div className="text-light">
-         
-        </div>
-        <div className="w-[70%]  grid justify-items-end">
-        <div className="flex mt-3">
-
-        <div className="mt-1">
-
-          Logged in as:
-        </div>
-          <div className="text-center ml-5">
-            <div className="btn-group btn-group-sm" role="group">
-              <button type="button" className="btn btn-secondary" disabled>
-                {data.username}
-              </button>
-              <button
-                onClick={() => {
-                  localStorage.removeItem("access");
-                  window.location.href = "/login";
-                }}
-                type="button"
-                className="btn btn-outline-secondary"
+        {data.typ === 2 ? (
+          <button className="nav nav-pills flex mb-auto mt-3 ml-20">
+            <div className="nav-item">
+              <NavLink
+                to="/company"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-link text-red-500"
+                    : "nav-link  text-red-500"
+                }
               >
-                log out
-              </button>
+                list of company job
+              </NavLink>
+            </div>
+            <div className="nav-item">
+              <NavLink
+                to="/requests"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-link  text-red-500"
+                    : "nav-link  text-red-500"
+                }
+              >
+                requests
+              </NavLink>
+            </div>
+          </button>
+        ) : (
+          <button className="nav nav-pills flex mb-auto mt-3 ml-20">
+            <div className="nav-item">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-link text-red-500"
+                    : "nav-link  text-red-500"
+                }
+              >
+                list of job
+              </NavLink>
+            </div>
+            <div className="nav-item">
+              <NavLink
+                to="/requests"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-link  text-red-500"
+                    : "nav-link  text-red-500"
+                }
+              >
+                requests
+              </NavLink>
+            </div>
+          </button>
+        )}
+
+        <div className="text-light"></div>
+        <div className="w-[70%]  grid justify-items-end">
+          <div className="flex mt-3">
+            <div className="mt-1">Logged in as:</div>
+            <div className="text-center ml-5">
+              <div className="btn-group btn-group-sm" role="group">
+                <button type="button" className="btn btn-secondary" disabled>
+                  {data.username}
+                </button>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("access");
+                    window.location.href = "/login";
+                  }}
+                  type="button"
+                  className="btn btn-outline-secondary"
+                >
+                  log out
+                </button>
+              </div>
             </div>
           </div>
-          </div>
-   
         </div>
-        
       </div>
       <Modal show={show}>
         <Modal.Header closeButton onClick={() => setShow(!show)}>
@@ -305,17 +340,16 @@ const Navbar = () => {
           onClick={() => setSelectedMessage(!selectedMessage)}
         >
           <Modal.Title>
-            {" "}
-            chats with {results.data.results?.map((i) => i.sender)[0].username}
+            chats with {results.data.results?.map((i) => i.sender)[0]?.username}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="">
+        <Modal.Body className="max-h-[30rem] overflow-y-scroll">
           {results.data.results?.map((i) => (
             <div
               className={`${
-                i.sender.id === 3
-                  ? "bg-green-500 mt-2 rounded-lg  w-96"
-                  : "bg-red-500 w-96  mt-2 ml-20 rounded-lg"
+                i.sender.id === data?.id
+                  ? "bg-green-500 mt-2 rounded-lg  w-96" 
+                  :  "bg-red-500 w-96  mt-2 ml-20 rounded-lg"
               }`}
             >
               {i.body}
@@ -323,6 +357,20 @@ const Navbar = () => {
           ))}
         </Modal.Body>
         <Modal.Footer>
+          <div className="flex">
+            <span className=" ">
+              <AiFillWechat className="h-10 w-10" />
+            </span>
+            <input
+              onChange={(e) => setSend(e.target.value)}
+              type="text"
+              className=" py-2 ml-5 w-[25rem] px-4 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Type your message here"
+            ></input>
+          </div>
+          <Button onClick={handleSubmit} className="btn btn-success w-28">
+            send
+          </Button>
           <Button
             onClick={() => setSelectedMessage(!selectedMessage)}
             className="btn btn-danger"
