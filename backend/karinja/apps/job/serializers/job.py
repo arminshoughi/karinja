@@ -4,7 +4,7 @@ from rest_framework import serializers
 from apps.job import services
 from apps.job.models import JobCategoryModel, JobModel, JobApplicationModel
 from apps.job.services import JobApplicationService
-from apps.share.serializers import CompanySerializer, CityBaseModelSerializer
+from apps.share.serializers import CompanySerializer, CityBaseModelSerializer, EmployeeSerializer
 
 from utils.serializers import DynamicFieldsModelSerializer
 
@@ -55,6 +55,7 @@ class JobModelBaseSerializer(DynamicFieldsModelSerializer):
 
 class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
     job = JobModelBaseSerializer(read_only=True)
+    user = EmployeeSerializer(read_only=True)
 
     class Meta:
         model = JobApplicationModel
@@ -62,6 +63,7 @@ class JobApplyingBaseSerializer(DynamicFieldsModelSerializer):
         fields = [
             'id',
             'job',
+            'user',
             'status',
         ]
         extra_kwargs = {
