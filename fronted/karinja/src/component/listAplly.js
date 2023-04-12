@@ -148,12 +148,15 @@ function ListApply() {
                         <th class="px-6 py-3 text-left">Company</th>
                         <th class="px-6 py-3 text-left">State</th>
                         <th class="px-6 py-3 text-left">City</th>
+                        <th class="px-6 py-3 text-left">Status</th>
+
                         <th class="px-6 py-3 text-left">Military Status</th>
                         <th class="px-6 py-3 text-left"></th>
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                       {results.map((item) => (
+                        
                         <tr key={item.id} class="hover:bg-gray-100">
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
@@ -176,6 +179,17 @@ function ListApply() {
                               {item?.job.city?.title}
                             </span>
                           </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            {item?.status === 0
+                              ? "initial"
+                              : item.job.military_status === 1
+                              ? "Pending"
+                              : item.job.military_status === 2
+                              ? "accept"
+                              : "ReJect"}
+                            </span>
+                          </td>
                           <td class="px-6 inline-flex text-xs leading-5 font-semibold rounded-full mt-8 bg-blue-100 text-teal-800">
                             {item.job.military_status === 0
                               ? "Concluded"
@@ -185,6 +199,7 @@ function ListApply() {
                               ? "Exempt"
                               : "No Matter"}
                           </td>
+                          
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <button onClick={() =>window.location.href = "requests/" +item.id} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4">
                               Further Information
