@@ -20,7 +20,7 @@ services:
       - redis_data:/data
 
   web:
-    build: .
+    build: ./backend/karinja
     restart: always
     command: >
       sh -c "python manage.py migrate &&
@@ -32,7 +32,7 @@ services:
              python manage.py loaddata job_categories &&
              python manage.py runserver 0.0.0.0:8001"
     volumes:
-      - .:/code
+      - ./backend/karinja/:/back
     ports:
       - "8001:8001"
     depends_on:
@@ -41,14 +41,24 @@ services:
       - worker
 
   worker:
-    build: .
+    build: ./backend/karinja
     restart: always
     command: celery -A karinja worker -l info -B
     volumes:
-      - .:/code
+      - ./backend/karinja/:/backend
     depends_on:
       - db
       - redis
+
+  react-ui:
+    build: ./fronted/karinja
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fronted/karinja/:/front
+
+    depends_on:
+      - web
 
 volumes:
   db_data:
