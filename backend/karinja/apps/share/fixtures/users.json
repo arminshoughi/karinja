@@ -7,6 +7,7 @@
             "password": "pbkdf2_sha256$260000$COjBO2fCMZ6WBQzMkwiydV$icqDcfuNTc1XikQnnM4y3u2x3MIc6+CCSj//SvGyGc4=",
             "is_superuser": true,
             "is_active": true,
+            "is_staff": true,
             "created_at": "2023-03-31 12:21:39.559044+00:00"
         }
     },
