@@ -94,7 +94,3 @@ class UserModel(AbstractBaseUser, BaseModel):
 
     def has_module_perms(self, app_label):
         return self.is_superuser
-
-    @property
-    def is_staff(self):
-        return self.is_superuser
