@@ -110,7 +110,7 @@ const Sighnin = () => {
                         checked={topping === "1"}
                         onChange={onTypeChange}
                       />
-                      1<label class="form-check-label" htmlFor="1"></label>
+                      employeer<label class="form-check-label" htmlFor="1"></label>
                     </div>
                     <div class="form-check">
                       <input
@@ -123,7 +123,7 @@ const Sighnin = () => {
                         onChange={onTypeChange}
                       />
                       <label class="form-check-label" htmlFor="2">
-                        2
+                      employee
                       </label>
                     </div>
                   </div>
@@ -311,10 +311,10 @@ const Sighnin = () => {
                   className="form-select form-select-lg"
                   aria-label=".form-select-lg example"
                 >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
+                  <option value="1">Associate</option>
+                  <option value="2">Bachelor</option>
+                  <option value="3">Master</option>
+                  <option value="4">Doctoral</option>
                 </select>
               </div>
               <div hidden={topping !== "2"}>
@@ -326,11 +326,11 @@ const Sighnin = () => {
                 className="form-select form-select-lg"
                 aria-label=".form-select-lg example"
                 >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="1">VERY_SMALL</option>
+                <option value="2">SMALL</option>
+                <option value="3">MEDIUM</option>
+                <option value="4">LARGE</option>
+                <option value="5">VERY_LARGE</option>
               </select>
                 </div>
               <div hidden={topping !== "1"}>

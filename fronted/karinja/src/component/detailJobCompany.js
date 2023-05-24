@@ -65,7 +65,7 @@ const {data : deleteApply} = useDeleteJobCompany(change)
       </p>
     </div>
     <div class="flex items-center space-x-4">
-      <button onClick={()=>setChange(true)} class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg">delete eNow</button>
+      <button onClick={()=>setChange(true)} class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg">delete Now</button>
      
     </div>
   </div>

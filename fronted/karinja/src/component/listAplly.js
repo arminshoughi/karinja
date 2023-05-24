@@ -61,15 +61,7 @@ function ListApply() {
     return numbers;
   }
 
-  const onOptionChange = (e) => {
-    steType(e.target.value);
-  };
-  const onSexChange = (e) => {
-    setSex(e.target.value);
-  };
-  const onMilitaryStatusChange = (e) => {
-    steMilitary_status(e.target.value);
-  };
+  
   useEffect(() => {
     setGenerateNumbers(generateNumbers());
   }, []);
@@ -143,7 +135,8 @@ function ListApply() {
                 <div class="p-4">
                   <table class="w-full table-auto">
                     <thead class="bg-gray-50">
-                      <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider"> 
+                      <th class="px-6 py-3 text-left">#</th>
                         <th class="px-6 py-3 text-left">Title</th>
                         <th class="px-6 py-3 text-left">Company</th>
                         <th class="px-6 py-3 text-left">State</th>
@@ -155,9 +148,14 @@ function ListApply() {
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      {results.map((item) => (
+                      {results.map((item , index) => (
                         
                         <tr key={item.id} class="hover:bg-gray-100">
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">
+                              {(currentPage - 1) * 20 + index + 1}
+                            </div>
+                          </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
                               {console.log(item.job.military_status , "asdss")}

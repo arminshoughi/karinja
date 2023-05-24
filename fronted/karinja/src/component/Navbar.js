@@ -42,6 +42,7 @@ const Navbar = () => {
 
 
   const handleSubmit = (e) => {
+    setSend("")
     setChange(!change)
 
     e.preventDefault();
@@ -337,6 +338,7 @@ const Navbar = () => {
         <Modal.Footer>
             
             <input
+            value={send}
               onChange={(e) => setSend(e.target.value)}
               type="text"
               className=" py-2 ml-5 w-full px-4 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

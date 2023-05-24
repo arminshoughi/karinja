@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useCurrent } from "../hook/current";
 
 const Login = () => {
+  const [topping, setTopping] = useState("1");
   const [status, setStatus] = useState();
   const [a, setA] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-console.log(a , "asdasdasd")
+const onTypeChange = (e) => {
+  setTopping(e.target.value);
+};
+
+
+
 localStorage.setItem('access', a)
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +34,7 @@ localStorage.setItem('access', a)
       .then((result) => {
         setStatus(result.status.toString());
         setA(result.data.access.toString());
-          window.location.href = "/"
+        window.location.href = topping ==="1" ?"/":"/company"  
       })
       .catch((error) => {
         alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
@@ -74,6 +79,35 @@ localStorage.setItem('access', a)
                   id="password"
                 />
               </div>
+              <label htmlFor="input">type</label>
+                  <div className="ml-3 mt-1">
+                    <div class="form-check mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="topping"
+                        value="1"
+                        id="1"
+                        checked={topping === "1"}
+                        onChange={onTypeChange}
+                      />
+                      employeer<label class="form-check-label" htmlFor="1"></label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="topping"
+                        value="2"
+                        id="2"
+                        checked={topping === "2"}
+                        onChange={onTypeChange}
+                      />
+                      <label class="form-check-label" htmlFor="2">
+                      employee
+                      </label>
+                    </div>
+                  </div>
               <button type="submit" className="btn mt-2 btn-primary">
                 Login
               </button>

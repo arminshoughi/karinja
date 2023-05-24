@@ -160,7 +160,7 @@ function JobOfCompany() {
   return (
     <div className="p-4">
       <div className="bg-white shadow-lg rounded-lg px-4 py-6">
-        <h1>Incomes</h1>
+        <h1>jobs</h1>
         <div className="col-12 my-4">
           <div className="card">
             <div className="card-header">New Income</div>
@@ -494,6 +494,7 @@ function JobOfCompany() {
                   <table class="w-full table-auto">
                     <thead class="bg-gray-50">
                       <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left">#</th>
                         <th class="px-6 py-3 text-left">Title</th>
                         <th class="px-6 py-3 text-left">Company</th>
                         <th class="px-6 py-3 text-left">State</th>
@@ -503,14 +504,23 @@ function JobOfCompany() {
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      {results.map((item) => (
+                      {results.map((item , index) => (
                         <tr key={item.id} class="hover:bg-gray-100">
+                           <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">
+                              {(currentPage - 1) * 20 + index + 1}
+                            </div>
+                          </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
                               {item.title}
                             </div>
                           </td>
-
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">
+                              {item.company.username}
+                            </div>
+                          </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                               {item.city?.state?.title}
@@ -537,7 +547,7 @@ function JobOfCompany() {
                               }
                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4"
                             >
-                              Further Information
+                              more
                             </button>
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
